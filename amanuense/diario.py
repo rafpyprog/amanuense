@@ -1,7 +1,7 @@
 import re
 from subprocess import PIPE, Popen
 
-from .utils import count_pdf_pages, get_line_value
+from .utils import count_pdf_pages, get_line_value, get_content_value
 from .summary import make_summary
 from .headings import get_font_styles, font_attr
 
@@ -85,81 +85,60 @@ class Diario():
 
     def find_headers(self, heading):
         headers = []
-        for page in self.pages:
+        for page_number, page in enumerate(self.pages):
             assert len(page.splitlines()) > 0
-            lines = [l for l in page.splitlines() if l.strip().startswith('<text')]
-            for n, line in enumerate(lines):
+            lines = [l for l in page.splitlines() if l.strip()]
+            last_number = None
+            for line_number, line in enumerate(lines):
                 font = font_attr(line, 'font')
                 if font == self.fontstyles[heading]:
-                    line_value = get_line_value(line)
-                    if line_value == 'Sumário':
+                    if 'Sumário' in line or 'fontspec' in line:
                         continue
+                    line_value = get_line_value(line)
                     if headers:
-                        if n - 1 == last:
-                            headers[-1][1] = headers[-1][1] + ' ' + line_value
+                        if line_number - 1 == last:
+                            headers[-1][-1] = headers[-1][-1] + ' ' + line_value
+                            last = line_number
                         else:
-                            headers.append([n, line_value])
+                            headers.append([page_number, line_number, line_value])
+                            last = line_number
                     else:
-                        headers.append([n, line_value])
-                    last = n
+                        headers.append([page_number, line_number, line_value])
+                        last = line_number
         return sorted(headers, key=lambda x: x[0])
+
+    def section_limits(self, section_name):
+        headers = self.find_headers('h1')
+        start_page, start_line, n = list(filter(lambda x: x[-1] == section_name, headers))[0]
+        end_index = headers.index([start_page, start_line, n]) + 1
+        end_page, end_line, n = headers[end_index]
+        return start_page, start_line, end_page, end_line
+
+    def section_contents(self, section_name):
+        start_page, start_line, end_page, end_line = self.section_limits(section_name)
+        section_contents = ''
+        for index, n in enumerate(range(start_page, end_page + 1)):
+            if index == start_page:
+                content = '\n'.join(self.pages[n].splitlines()[start_line + 1:])
+                section_contents += content
+            elif index == end_page:
+                content = '\n'.join(self.pages[n].splitlines()[:end_line])
+                section_contents += content
+            else:
+                content = self.pages[n]
+                section_contents += content
+
+        lines = section_contents.splitlines()
+
+
+        return '\n'.join([get_content_value(i) for i in lines])
+
+
 
 
 
 
 '''
-def serialize_pages(n):
-    import json
-    d = Diario(f'/home/rafael/Área de Trabalho/cartesiano/tests/data/DOUS{n}.pdf')
-    j = json.dumps(d.pages)
-    with open(f'dou{n}.pages', 'w') as f:
-        f.write(j)
-
-
-serialize_pages(2)
-
-
 d = Diario(f'/home/rafael/Área de Trabalho/cartesiano/tests/data/DOUS2.pdf')
-summary = d.summary
-h1 = d.find_headers('h1')
-
-d.
-
-len(h1)
-
-len(summary)
-
-chaves = list(summary.keys())
-
-headers = list(map(lambda x: x[1], h1))
-
-for c in chaves:
-    if c not in headers:
-        print(c)
-
-
-for i, nome in h1:
-    if nome not in chaves:
-        print(nome)
-
-
-[i for i in list(summary.keys()) if i not in list(filter(lambda x: x[1], h1))]
-
-xml = d.toxml(d.PDF, d.encoding)
-'Ministério da Cultura'
-
-nomes = [i[1] for i in h1]
-
-[i.strip() for i in nomes if i not in summary]
-
-[i for i in summary if i in list(filter(lambda x: x[0], h1))]
-
-len(summary)
-h1
-
-
-for i in d.pages:
-    lines = [l for l in i.splitlines()]
-    for line in lines:
-        if 'Cultura' in line:
-            print(line)'''
+d.pages[0].splitlines()[45]
+d.find_headers('h1')'''

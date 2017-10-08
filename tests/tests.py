@@ -159,3 +159,23 @@ def test_find_header(pdf, expected):
     h1 = diario.find_headers('h1')
     assert h1 is not None
     assert len(h1) == len(diario.summary)
+
+
+@pytest.mark.parametrize('pdf, expected', zip(data_files(),
+    [(1, 33, 1, 198),
+     (0, 30, 2, 137),
+     (0, 215, 2, 240)]))
+def test_get_section_limits(pdf, expected):
+    diario = Diario(pdf)
+    assert diario.section_limits('Presidência da República') == expected
+
+@pytest.mark.parametrize('pdf, expected', zip(data_files(),
+    [(1, 33, 1, 198),
+     (0, 30, 2, 137),
+     (0, 215, 2, 240)]))
+def test_get_section_contents(pdf, expected):
+    diario = Diario(pdf)
+    contents = diario.section_contents('Presidência da República')
+    with open('content.txt', 'w') as f:
+        f.write(contents)
+    assert contents != ''
