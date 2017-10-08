@@ -1,0 +1,11 @@
+{
+  "tests/tests.py::test_male_summary[/home/rafael/\\xc1rea de Trabalho/cartesiano/tests/data/DOUS1.pdf-Atos do Poder Judici\\xe1rio]": true,
+  "tests/tests.py::test_male_summary[/home/rafael/\\xc1rea de Trabalho/cartesiano/tests/data/DOUS1.pdf-Presid\\xeancia da Rep\\xfablica]": true,
+  "tests/tests.py::test_male_summary[/home/rafael/\\xc1rea de Trabalho/cartesiano/tests/data/DOUS1.pdf-Presid\\xeancia da Rep\\xfalica]": true,
+  "tests/tests.py::test_male_summary[/home/rafael/\\xc1rea de Trabalho/cartesiano/tests/data/DOUS2.pdf-Presid\\xeancia da Rep\\xfablica]": true,
+  "tests/tests.py::test_male_summary[/home/rafael/\\xc1rea de Trabalho/cartesiano/tests/data/DOUS2.pdf-Presid\\xeancia da Rep\\xfalica]": true,
+  "tests/tests.py::test_male_summary[/home/rafael/\\xc1rea de Trabalho/cartesiano/tests/data/DOUS3.pdf-Presid\\xeancia da Rep\\xfablica]": true,
+  "tests/tests.py::test_male_summary[/home/rafael/\\xc1rea de Trabalho/cartesiano/tests/data/DOUS3.pdf-Presid\\xeancia da Rep\\xfalica]": true,
+  "tests/tests.py::test_summary_content_is_list[pdf0]": true,
+  "tests/tests.py::test_xml_is_string": true
+}
