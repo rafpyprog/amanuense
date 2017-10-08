@@ -136,3 +136,26 @@ def test_get_font_styles(pdf, expected):
     styles = get_font_styles(page1)
     assert isinstance(styles, dict)
     assert tuple(styles.values()) == expected
+
+
+@pytest.mark.parametrize('pdf, expected', zip(data_files(),
+    [('5', '10', '11'),
+     ('4', '5', '6'),
+     ('5', '10', '11')]))
+def test_diario_font_styles(pdf, expected):
+    diario = Diario(pdf)
+    page1 = diario.pages[0]
+    styles = get_font_styles(page1)
+    assert isinstance(diario.fontstyles, dict)
+    assert tuple(diario.fontstyles.values()) == expected
+
+
+@pytest.mark.parametrize('pdf, expected', zip(data_files(),
+    [('5', '10', '11'),
+     ('4', '5', '6'),
+     ('5', '10', '11')]))
+def test_find_header(pdf, expected):
+    diario = Diario(pdf)
+    h1 = diario.find_headers('h1')
+    assert h1 is not None
+    assert len(h1) == len(diario.summary)

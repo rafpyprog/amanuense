@@ -5,9 +5,12 @@ from lxml import etree
 def font_attr(fontspec, attr):
     pattern = '{}=".*?"'.format(attr)
     attr = re.search(pattern, fontspec)
-    match = attr.group()
-    attr_value = match.split('=')[1].replace('"', '')
-    return attr_value
+    if attr:
+        match = attr.group()
+        attr_value = match.split('=')[1].replace('"', '')
+        return attr_value
+    else:
+        return False
 
 
 def get_font_styles(page1):
@@ -36,9 +39,3 @@ def get_font_styles(page1):
     fonts['h3'] = str(int(fonts['h2']) + 1)
 
     return fonts
-
-
-def get_titles_by_heading(document, heading):
-    text_elements = document.xpath('//text')
-    titles = [i for i in text_elements if i.attrib.get('font') == heading]
-    return titles

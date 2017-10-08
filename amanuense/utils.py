@@ -1,4 +1,11 @@
+import re
 from subprocess import PIPE, Popen
+
+def get_line_value(line):
+    open_tag = re.search('^\n*<text.*?>', line).span()
+    line = line[open_tag[1]:].replace('</text>', '').strip()
+    line = line.replace('<b>', '').replace('</b>', '')
+    return line
 
 
 def count_pdf_pages(filepath, encoding='utf-8'):

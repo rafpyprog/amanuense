@@ -1,8 +1,9 @@
 import re
 from subprocess import PIPE, Popen
 
-from .utils import count_pdf_pages
+from .utils import count_pdf_pages, get_line_value
 from .summary import make_summary
+from .headings import get_font_styles, font_attr
 
 class Diario():
     def __init__(self, PDF_filepath):
@@ -33,6 +34,11 @@ class Diario():
         page1 = self.pages[0]
         return make_summary(page1)
 
+    @property
+    def fontstyles(self):
+        page1 = self.pages[0]
+        return get_font_styles(page1)
+
     def parse_pages(self):
         xml = self.toxml(self.PDF, self.encoding)
         pages = self.get_pages_from_xml(xml)
@@ -60,7 +66,8 @@ class Diario():
 
         PATTERNS = [
             '\n*(<text.*?>)(Ano)\s.*?(o-).*?ISSN.*?ICP-Brasil\.</text>\n*',
-            '\n*<text.*?>N.*?(ICP-Brasil)\..*?\d{1,3}</text>\n*',
+            #'\n*<text.*?>N.*?(ICP-Brasil)\.</text>\n*<text.*?>.*?\d{1,3}</text>\n*',
+            '<text.*?>(1|3)</text>',
             '<text.*?>(Este documento).*?PÁGINA</text>\n*',
             '<text.*?><i>\d.*?(ICP-Brasil)\.</text>\n*'
             ]
@@ -76,6 +83,29 @@ class Diario():
         page = re.sub(PATTERN, '', page, flags=re.DOTALL)
         return page
 
+    def find_headers(self, heading):
+        headers = []
+        for page in self.pages:
+            assert len(page.splitlines()) > 0
+            lines = [l for l in page.splitlines() if l.strip().startswith('<text')]
+            for n, line in enumerate(lines):
+                font = font_attr(line, 'font')
+                if font == self.fontstyles[heading]:
+                    line_value = get_line_value(line)
+                    if line_value == 'Sumário':
+                        continue
+                    if headers:
+                        if n - 1 == last:
+                            headers[-1][1] = headers[-1][1] + ' ' + line_value
+                        else:
+                            headers.append([n, line_value])
+                    else:
+                        headers.append([n, line_value])
+                    last = n
+        return sorted(headers, key=lambda x: x[0])
+
+
+
 
 '''
 def serialize_pages(n):
@@ -88,27 +118,48 @@ def serialize_pages(n):
 
 serialize_pages(2)
 
-d = Diario(f'/home/rafael/Área de Trabalho/cartesiano/tests/data/DOUS1.pdf')
-p = d.pages[0]
-d.summary
 
-for i in p.splitlines():
-    print(i)
-    break
-    pattern = '\n*<text.*?(>)(?<=[A-Z][a-z]).*\s?\.\s{1,2}[0-9]{1,3}</text>\n*'
-    pattern = '(?<=.*>)[A-Z][a-z]'
-    if re.match(pattern, i) is not None:
-        print(re.match(pattern, i))
+d = Diario(f'/home/rafael/Área de Trabalho/cartesiano/tests/data/DOUS2.pdf')
+summary = d.summary
+h1 = d.find_headers('h1')
+
+d.
+
+len(h1)
+
+len(summary)
+
+chaves = list(summary.keys())
+
+headers = list(map(lambda x: x[1], h1))
+
+for c in chaves:
+    if c not in headers:
+        print(c)
 
 
-for n, i in enumerate(p):
-    print(n)
-    if i.find('ICP-Brasil') != -1:
-        raise ValueError
-p[0].splitlines()[10:25]
+for i, nome in h1:
+    if nome not in chaves:
+        print(nome)
 
 
+[i for i in list(summary.keys()) if i not in list(filter(lambda x: x[1], h1))]
 
-re.search('</i></text>',p[0].splitlines()[24])
+xml = d.toxml(d.PDF, d.encoding)
+'Ministério da Cultura'
 
-p[0][:2500].splitlines()'''
+nomes = [i[1] for i in h1]
+
+[i.strip() for i in nomes if i not in summary]
+
+[i for i in summary if i in list(filter(lambda x: x[0], h1))]
+
+len(summary)
+h1
+
+
+for i in d.pages:
+    lines = [l for l in i.splitlines()]
+    for line in lines:
+        if 'Cultura' in line:
+            print(line)'''
