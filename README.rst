@@ -2,7 +2,7 @@ Amanuense
 =========
 
 
-.. image:: https://raw.githubusercontent.com/rafpyprog/amanuense/master/ext/logo.svg
+.. image:: https://raw.githubusercontent.com/rafpyprog/amanuense/master/ext/logo.png
     :target: https://github.com/rafpyprog/amanuense
 
 
