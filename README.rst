@@ -12,7 +12,7 @@ Tutorial
 
     from amanuense.diario import Diario
 
-    pdf = '/home/rafael/Área de Trabalho/cartesiano/tests/data/DOUS3.pdf'
+    pdf = '/path/diario_oficial.pdf'
     diario = Diario(pdf)
 
     # Quantidade de páginas do documento
