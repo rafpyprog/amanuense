@@ -3,6 +3,16 @@ Amanuense
 
 Parser do Diário Oficial da União (D.O.U)
 
+Instalação
+----------
+
+
+.. code-block::
+
+
+    pip install amanuense
+
+
 Tutorial
 --------
 
