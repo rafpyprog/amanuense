@@ -1,7 +1,10 @@
-.. image:: https://raw.githubusercontent.com/rafpyprog/amanuense/master/ext/logo.svg
-
 Amanuense
 =========
+
+
+.. image:: https://raw.githubusercontent.com/rafpyprog/amanuense/master/ext/logo.svg
+    :target: https://github.com/rafpyprog/amanuense
+
 
 Parser do Diário Oficial da União (D.O.U)
 
