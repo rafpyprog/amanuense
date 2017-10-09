@@ -1,6 +1,5 @@
 .. image:: https://raw.githubusercontent.com/rafpyprog/amanuense/master/ext/logo.svg
 
-
 Amanuense
 =========
 
