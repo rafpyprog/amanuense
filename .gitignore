@@ -1,0 +1,5 @@
+#arquivo/
+__pycache__/
+xml/
+
+*.pyc
