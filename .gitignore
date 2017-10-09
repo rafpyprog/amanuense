@@ -1,5 +1,8 @@
 #arquivo/
 __pycache__/
+.cache/
+amanuense.egg-info/
+dist/
 xml/
 
 *.pyc
