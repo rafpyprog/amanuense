@@ -1,0 +1,36 @@
+Metadata-Version: 1.1
+Name: amanuense
+Version: 0.0.1a0
+Summary: Parser do Diário Oficial da União (DOU)
+Home-page: https://github.com/rafpyprog/amanuense
+Author: Rafael Alves Ribeiro
+Author-email: rafael.alves.ribeiro@gmail.com
+License: MIT
+Description-Content-Type: UNKNOWN
+Description: # amanuense
+        Parser do Diário Oficial da União (D.O.U)
+        
+        #Tutorial
+        
+        
+            from amanuense import Diario
+            
+            pdf = '/home/rafael/Área de Trabalho/cartesiano/tests/data/DOUS3.pdf'
+            diario = Diario(pdf)
+        
+            diario.page_count
+        
+            # Sumário do D.O.U conforme apresentado na primeira página do documento
+            diario.summary
+            
+            # Retorna o conteúdo publicado por um determinado órgão do Governo
+            diario.section_contents('Presidência da República').splitlines()
+            
+            
+        
+Keywords: parser dou
+Platform: UNKNOWN
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Topic :: Utilities
+Classifier: License :: OSI Approved :: MIT License

@@ -1,0 +1,12 @@
+README.rst
+setup.py
+amanuense/__init__.py
+amanuense/diario.py
+amanuense/headings.py
+amanuense/summary.py
+amanuense/utils.py
+amanuense.egg-info/PKG-INFO
+amanuense.egg-info/SOURCES.txt
+amanuense.egg-info/dependency_links.txt
+amanuense.egg-info/requires.txt
+amanuense.egg-info/top_level.txt
