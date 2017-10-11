@@ -43,9 +43,11 @@ def diario(dou_number, pages):
     #diario.parse_pages = MagicMock(return_value=pages)
     return diario
 
-
-def test_diario_init(diario):
+@pytest.mark.parametrize('pdf', data_files())
+def test_diario_init(pdf):
+    diario = Diario(pdf)
     assert isinstance(diario, Diario)
+
 
 @pytest.mark.parametrize('pdf', data_files())
 def test_pages(pdf):
@@ -59,13 +61,16 @@ def test_page_count_equals_pages(pdf):
     assert diario.page_count == len(diario.pages)
 
 
-def test_toxml_decode_and_returns_valid_string(diario):
-    fp = os.path.join(data_dir(), 'DOUS1.pdf')
+@pytest.mark.parametrize('pdf', data_files())
+def test_toxml_decode_and_returns_valid_string(pdf):
+    diario = Diario(pdf)
     string = diario.toxml(fp, 'Latin1', decode=True)
     assert string not in ('', None)
 
 
-def test_toxml_decode_and_returns_string(diario):
+@pytest.mark.parametrize('pdf', data_files())
+def test_toxml_decode_and_returns_string(pdf):
+    diario = Diario(pdf)
     fp = os.path.join(data_dir(), 'DOUS1.pdf')
     assert isinstance(diario.toxml(fp, 'latin1', decode=True), str)
 
