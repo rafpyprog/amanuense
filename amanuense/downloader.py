@@ -10,13 +10,13 @@ from tqdm import tqdm
 
 from exceptions import DiarioNotFoundOnDate
 
-__all__ = ['download_DOU']
+__all__ = 'download_DOU'
 
 
 def diario_URL(secao, date):
     ''' Returns an URL for a Diário published on the given date '''
-    URL = (f'http://pesquisa.in.gov.br/imprensa/jsp/visualiza/index.jsp'
-           f'?jornal={secao}&pagina=1&data={date}')
+    URL = ('http://pesquisa.in.gov.br/imprensa/jsp/visualiza/index.jsp'
+           '?jornal={0}&pagina=1&data={1}'.format(secao, date))
     return URL
 
 
@@ -50,9 +50,9 @@ def create_page_URL(secao, page_number, date):
     ''' Creates an URL pointing to a PDF page from a given section and
         date of Diário Oficial da União '''
 
-    URL = (f'http://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?'
-           f'jornal={secao}&pagina={page_number}&data={date}&captchafield='
-           'firistAccess')
+    URL = ('http://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?'
+           'jornal={0}&pagina={1}&data={2}&captchafield='
+           'firistAccess'.format(secao, page_number, date))
     return URL
 
 
@@ -97,7 +97,8 @@ def jornal_URLs(section, date):
         raise DiarioNotFoundOnDate(date)
 
     page_count = diario_page_count(diario_info)
-    URLs = [create_page_URL(section, n, date) for n in range(1, page_count + 1)]
+    URLs = [create_page_URL(section, n, date)
+            for n in range(1, page_count + 1)]
     return URLs
 
 
@@ -118,9 +119,9 @@ def download_diario(section, date, filepath):
     URLs = jornal_URLs(section, date)
     pages = download_pages(URLs)
 
-    print(f'Writing pages to pdf {filepath}...')
+    print('Writing pages to pdf {0}...'.format(filepath))
     write_pages_to_PDF(pages, filepath=filepath)
-    print(f'Done.')
+    print('Done.')
 
 
 if __name__ == '__main__':
