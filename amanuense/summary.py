@@ -25,7 +25,8 @@ def summary_to_dict(summary):
 def get_summary_content(page):
     content = []
     for i in page.splitlines():
-        summary_item = '\n*<text.*?>[A-Z][a-z].*\s?\.\s{1,2}[0-9]{1,3}</text>\n*'
+        summary_item = ('\n*<text.*?>[A-Z][a-z].*\s?\.'
+                        '\s{1,2}[0-9]{1,3}</text>\n*')
         is_sumario = re.match(summary_item, i)
         if is_sumario:
             text = is_sumario.group(0)

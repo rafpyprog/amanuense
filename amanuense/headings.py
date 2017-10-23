@@ -1,5 +1,4 @@
 import re
-from lxml import etree
 
 
 def font_attr(fontspec, attr):
@@ -34,7 +33,6 @@ def get_font_styles(page1):
         elif size == H2_SIZE:
             if fonts['h2'] == '':
                 fonts['h2'] = fontid
-
 
     fonts['h3'] = str(int(fonts['h2']) + 1)
 
