@@ -10,8 +10,9 @@ from unittest.mock import MagicMock
 import pytest
 
 from amanuense import *
-#from amanuense.summary import get_summary_content, make_summary
-#from amanuense.headings import get_font_styles, font_attr
+from amanuense.diario import *
+from amanuense.summary import get_summary_content, make_summary
+from amanuense.headings import get_font_styles, font_attr
 
 def data_dir():
     cwd = os.getcwd()
