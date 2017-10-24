@@ -1,0 +1,23 @@
+language: python
+python: 3
+
+sudo: false
+
+cache:
+  - pip
+
+install:
+  - pip install -r requirements.txt
+
+script:
+  - pip install coveralls pytest
+  - pytest --cov=amanuense  --cov-report html tests/tests.py
+  - coveralls
+
+deploy:
+  provider: pypi
+  user: $pypi_user
+  password: $pypi_pass
+  on:
+    tags: true
+

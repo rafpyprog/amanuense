@@ -20,6 +20,11 @@ setup(
     url = 'https://github.com/rafpyprog/amanuense',
     packages=['amanuense'],
     install_requires=['lxml',],
+      extras_require={
+          'test': [
+              'pytest',
+              'coverage'
+          ]},
     long_description=read('README.rst'),
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',

@@ -2,11 +2,15 @@ from collections import OrderedDict
 import json
 import os
 import random
+import sys
+sys.path.insert(0,'../amanuense')
+
 from unittest.mock import MagicMock
 
 import pytest
 
 from amanuense import *
+from amanuense.diario import *
 from amanuense.summary import get_summary_content, make_summary
 from amanuense.headings import get_font_styles, font_attr
 
